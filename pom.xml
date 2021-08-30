@@ -44,20 +44,6 @@
             <version>0.8.0</version>
             <scope>compile</scope>
         </dependency>
-        <!--compile('io.jsonwebtoken:jjwt:0.8.0')-->
-        <!--<dependency>-->
-        <!--<groupId>io.jsonwebtoken</groupId>-->
-        <!--<artifactId>jjwt-impl</artifactId>-->
-        <!--<version>0.11.2</version>-->
-        <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>io.jsonwebtoken</groupId>-->
-        <!--<artifactId>jjwt-jackson</artifactId> &lt;!&ndash; or jjwt-gson if Gson is preferred &ndash;&gt;-->
-        <!--<version>0.11.2</version>-->
-        <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
@@ -68,20 +54,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <!--compile('io.jsonwebtoken:jjwt:0.8.0')-->
-
-        <!--implementation 'org.springframework.boot:spring-boot-starter-security'-->
-        <!--compileOnly 'org.projectlombok:lombok'-->
-        <!--annotationProcessor 'org.projectlombok:lombok'-->
-
-
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.security.oauth</groupId>-->
-        <!--<artifactId>spring-security-oauth2</artifactId>-->
-        <!--<version>2.4.0.RELEASE</version>-->
-        <!--</dependency>-->
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

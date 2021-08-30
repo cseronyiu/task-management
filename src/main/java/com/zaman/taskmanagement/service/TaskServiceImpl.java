@@ -70,7 +70,7 @@ public class TaskServiceImpl implements TaskService {
                 baseResponse.setErrorMessage("Bad request");
                 return baseResponse;
             }
-            Task task = taskRepository.findById(request.getId()).get();
+            Task task = taskRepository.findFirstByIdAndDeletedFalse(request.getId());
             if (task != null) {
                 if (task.getDescription() != request.getDescription()) {
                     Task dbTask = taskRepository.findFirstByProject_IdAndDescriptionAndDeletedFalse(request.getProjectId(), request.getDescription());
@@ -100,7 +100,7 @@ public class TaskServiceImpl implements TaskService {
     public BaseResponse getTask(Integer taskId, User user) {
         BaseResponse baseResponse = new BaseResponse();
         if (taskId > 0) {
-            Task task = taskRepository.findById(taskId).get();
+            Task task = taskRepository.findFirstByIdAndDeletedFalse(taskId);
             if (task != null) {
                 if (task.getProject().getProjectOwner() == user.getId()) {
                     GetTaskResponse taskResponse = new GetTaskResponse();

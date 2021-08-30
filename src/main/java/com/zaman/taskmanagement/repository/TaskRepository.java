@@ -7,7 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface TaskRepository extends CrudRepository<Task, Integer> {
-    Task findFirstById (Integer Id);
+//    Task findFirstById (Integer Id);
+    Task findFirstByIdAndDeletedFalse (Integer Id);
 //    Task findFirstByProject_IdAndDescription(Integer projectId,String description);
     Task findFirstByProject_IdAndDescriptionAndDeletedFalse(Integer projectId,String description);
 
