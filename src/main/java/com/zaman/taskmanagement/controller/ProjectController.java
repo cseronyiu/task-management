@@ -45,4 +45,12 @@ public class ProjectController {
         return new ResponseEntity<BaseResponse>(baseResponse, baseResponse.getStatus());
     }
 
+
+    @RequestMapping(path = "/getProjectsByUser", method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ALL_PROJECTS_BY_USER')")
+    public ResponseEntity<?> getTasksByUser(@RequestParam("username") String username ,@AuthenticationPrincipal UserDetails userDetails) {
+        BaseResponse baseResponse = projectService.getProjectsByUser(username);
+        return new ResponseEntity<BaseResponse>(baseResponse, baseResponse.getStatus());
+    }
+
 }

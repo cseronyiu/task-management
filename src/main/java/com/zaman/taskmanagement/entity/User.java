@@ -15,11 +15,6 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "user")
-//@Getter
-//@Setter
-//@Builder
-//@NoArgsConstructor
-//@AllArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

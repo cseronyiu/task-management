@@ -11,6 +11,7 @@ import com.zaman.taskmanagement.entity.Task;
 import com.zaman.taskmanagement.entity.User;
 import com.zaman.taskmanagement.repository.ProjectRepository;
 import com.zaman.taskmanagement.repository.TaskRepository;
+import com.zaman.taskmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public BaseResponse createProject(CreateProjectRequest project, User user) {
@@ -101,6 +105,28 @@ public class ProjectServiceImpl implements ProjectService {
         return baseResponse;
     }
 
+    @Override
+    public BaseResponse getProjectsByUser(String userName) {
+        BaseResponse baseResponse = new BaseResponse();
+        User user = userRepository.findFirstByUsername(userName);
+        List<Project> projects = projectRepository.findAllByProjectOwnerAndDeletedFalse(user.getId());
+        List<ProjectResponseModel> projectResponseModels;
+        if (projects != null) {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            projectResponseModels = mapper.convertValue(projects, new TypeReference<List<ProjectResponseModel>>() {
+            });
+            baseResponse.setData(projectResponseModels);
+            baseResponse.setStatus(HttpStatus.OK);
+        } else {
+            baseResponse.setData(false);
+            baseResponse.setStatus(HttpStatus.NO_CONTENT);
+            baseResponse.setErrorMessage("No Project found.");
+        }
+
+        return baseResponse;
+    }
+
     private void deleteTasks(Integer id) {
         List<Task> tasks = taskRepository.findAllByProject_IdAndDeletedFalse(id);
         for (Task task : tasks) {
@@ -108,6 +134,5 @@ public class ProjectServiceImpl implements ProjectService {
         }
         taskRepository.saveAll(tasks);
     }
-
 
 }

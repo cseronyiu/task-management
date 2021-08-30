@@ -10,10 +10,6 @@ import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "authority")
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
 public class Authority {
 
     @Id

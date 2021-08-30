@@ -11,11 +11,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-//@Getter
-//@Setter
-//@Builder
-//@NoArgsConstructor
-//@AllArgsConstructor
 public class Role {
 
     @Id

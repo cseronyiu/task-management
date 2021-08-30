@@ -20,7 +20,5 @@ public interface TaskService {
 
     BaseResponse getTasksByUser(String userId);
 
-    BaseResponse getTasksByProject(Integer projectName);
-
     BaseResponse getTaskList(User user);
 }

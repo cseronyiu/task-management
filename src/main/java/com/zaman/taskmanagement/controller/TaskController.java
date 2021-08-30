@@ -17,7 +17,6 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-
     @RequestMapping(path = "/createTask", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('CREATE_TASK')")
     public ResponseEntity<?> createTask(@RequestBody CreateTaskRequest request, @AuthenticationPrincipal UserDetails userDetails) {
@@ -78,20 +77,8 @@ public class TaskController {
     @RequestMapping(path = "/getTasksByUser", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ALL_TASKS_BY_USER')")
     public ResponseEntity<?> getTasksByUser(@RequestParam("username") String username ,@AuthenticationPrincipal UserDetails userDetails) {
-        User user = (User) userDetails;
         BaseResponse baseResponse = taskService.getTasksByUser(username);
         return new ResponseEntity<BaseResponse>(baseResponse, baseResponse.getStatus());
     }
-
-
-    @RequestMapping(path = "/getTasksByProject", method = RequestMethod.GET)
-    @PreAuthorize("hasAuthority('ALL_TASKS_BY_PROJECT')")
-    public ResponseEntity<?> getTasksByProject(@RequestParam("projectId") Integer projectId ,@AuthenticationPrincipal UserDetails userDetails) {
-        User user = (User) userDetails;
-        BaseResponse baseResponse = taskService.getTasksByProject(projectId);
-        return new ResponseEntity<BaseResponse>(baseResponse, baseResponse.getStatus());
-    }
-
-
 
 }

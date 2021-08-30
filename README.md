@@ -1,12 +1,12 @@
 # task-management
 
-Steps to follow:
+#### Steps to follow:
 
 1. change database configurations 
 2. run project
 
-APIs:
-
+### APIs:
+#### signin:
 * http://localhost:8081/auth/signin (POST)
 
 {
@@ -14,8 +14,8 @@ APIs:
 	"password":"password"
 }
 
-
-* http://localhost:8080/api/createProject(POST)
+#### Create project:
+* http://localhost:8081/api/createProject(POST)
 
 header: Authorization : Bearer {{access_token}} 
 
@@ -23,10 +23,81 @@ body:
 		{
 			 "name":"Test Project"
 		}
-
-* http://localhost:8080/api/getAllProject (GET)
+		
+#### Get all projects:
+* http://localhost:8081/api/getAllProject (GET)
 
 header: Authorization : Bearer {{access_token}} 
 
 
+#### Delete project:
+* http://localhost:8081/api/deleteProject/25 (DELET)
 
+header: Authorization : Bearer {{access_token}} 
+
+#### Create task:
+* http://localhost:8081/api/createTask(POST)
+
+header: Authorization : Bearer {{access_token}} 
+
+body: 
+{
+    "description": "Test description",
+    "status": "open",
+    "projectId": "26",
+    "dueDate":"2021-02-10"
+}
+
+#### Edit task:
+* http://localhost:8081/api/editTask(POST)
+
+header: Authorization : Bearer {{access_token}} 
+
+body:
+{
+    "id":31,
+    "description": "Desc2e",
+    "status": "open",
+    "projectId": "30",
+    "dueDate":"2021-02-02"
+}
+
+#### Get task:
+* http://localhost:8081/api/getTaskList (GET)
+
+header: Authorization : Bearer {{access_token}} 
+
+* http://localhost:8081/api/getTask/27 (GET)
+
+header: Authorization : Bearer {{access_token}} 
+
+ ### Search tasks
+ ####  Get all by project
+ * http://localhost:8081/api/getAllByProject/26 (GET)
+ 
+ header: Authorization : Bearer {{access_token}} 
+
+* http://localhost:8081/api/getTaskByStatus?status=open (GET)
+
+header: Authorization : Bearer {{access_token}} 
+
+ ####  Get expired tasks (due date in the past)
+ 
+* http://localhost:8081/api/getExpiredTasks (GET)
+
+header: Authorization : Bearer {{access_token}} 
+
+ ####  By status
+* http://localhost:8081/api/getTaskByStatus?status=open (GET)
+
+header: Authorization : Bearer {{access_token}} 
+
+ #### Get all tasks by user
+* http://localhost:8081/api/getTasksByUser?username=username (GET)
+
+header: Authorization : Bearer {{access_token}} 
+
+ #### Get all projects by user
+* http://localhost:8081/api/getTasksByProject?projectId=26 (GET)
+
+header: Authorization : Bearer {{access_token}} 

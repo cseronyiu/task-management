@@ -14,7 +14,6 @@ public class Project {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
-
     @NotEmpty
     private String name;
     @NotEmpty
@@ -28,9 +27,6 @@ public class Project {
     @UpdateTimestamp
     private Date updatedDate;
     private boolean deleted=false;
-
-
-
 
     @OneToMany(mappedBy="project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Task> tasks;

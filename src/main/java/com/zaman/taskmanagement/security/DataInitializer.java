@@ -57,7 +57,7 @@ public class DataInitializer implements CommandLineRunner {
             Authority adminAuth8 = new Authority("EXPIRED_TASKS", role2);
             Authority adminAuth9 = new Authority("TASKS_BY_STATUS", role2);
             Authority adminAuth10 = new Authority("ALL_TASKS_BY_USER", role2);
-            Authority adminAuth11 = new Authority("ALL_TASKS_BY_PROJECT", role2);
+            Authority adminAuth11 = new Authority("ALL_PROJECTS_BY_USER", role2);
 
 
 

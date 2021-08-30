@@ -11,4 +11,7 @@ public interface ProjectService {
     BaseResponse getAllProjects(User user);
 
     BaseResponse deleteProject(Integer projectId, User user);
+
+    BaseResponse getProjectsByUser(String username);
 }
+

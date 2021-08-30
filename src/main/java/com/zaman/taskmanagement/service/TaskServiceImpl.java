@@ -19,6 +19,7 @@ import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService {
+
     @Autowired
     TaskRepository taskRepository;
 
@@ -131,7 +132,6 @@ public class TaskServiceImpl implements TaskService {
         return baseResponse;
     }
 
-
     @Override
     public BaseResponse getAllByProject(Integer projectId, User user) {
         BaseResponse baseResponse = new BaseResponse();
@@ -158,7 +158,6 @@ public class TaskServiceImpl implements TaskService {
         return baseResponse;
     }
 
-
     @Override
     public BaseResponse getExpiredTasks(User user) {
         BaseResponse baseResponse = new BaseResponse();
@@ -179,7 +178,6 @@ public class TaskServiceImpl implements TaskService {
 
         return baseResponse;
     }
-
 
     @Override
     public BaseResponse getTaskByStatus(String status, User user) {
@@ -213,23 +211,6 @@ public class TaskServiceImpl implements TaskService {
         }
         if (!projectIds.isEmpty()) {
             List<Task> tasks = taskRepository.findAllByProject_IdInAndDeletedFalse(projectIds);
-            List<GetTaskResponse> taskResponses = mapTaskList(tasks);
-            baseResponse.setStatus(HttpStatus.OK);
-            baseResponse.setData(taskResponses);
-        } else {
-            baseResponse.setStatus(HttpStatus.NO_CONTENT);
-            baseResponse.setErrorMessage("No task found");
-        }
-
-        return baseResponse;
-    }
-
-    @Override
-    public BaseResponse getTasksByProject(Integer projectId) {
-        BaseResponse baseResponse = new BaseResponse();
-        Project project = projectRepository.findFirstByIdAndDeletedFalse(projectId);
-        if (project != null) {
-            List<Task> tasks = taskRepository.findAllByProject_IdAndDeletedFalse(project.getId());
             List<GetTaskResponse> taskResponses = mapTaskList(tasks);
             baseResponse.setStatus(HttpStatus.OK);
             baseResponse.setData(taskResponses);
