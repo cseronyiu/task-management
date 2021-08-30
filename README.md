@@ -93,11 +93,11 @@ header: Authorization : Bearer {{access_token}}
 header: Authorization : Bearer {{access_token}} 
 
  #### Get all tasks by user
-* http://localhost:8081/api/getTasksByUser?username=username (GET)
+* http://localhost:8081/api/getTasksByUser?username=user (GET)
 
 header: Authorization : Bearer {{access_token}} 
 
  #### Get all projects by user
-* http://localhost:8081/api/getTasksByProject?projectId=26 (GET)
+* http://localhost:8081/api/getProjectsByUser?username=user (GET)
 
 header: Authorization : Bearer {{access_token}} 
