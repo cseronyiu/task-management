@@ -6,6 +6,7 @@
 2. run project
 
 ### APIs:
+###### * Please import Task Management.postman_collection.json to your postman for easy testing.
 #### signin:
 * http://localhost:8081/auth/signin (POST)
 

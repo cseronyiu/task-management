@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -63,12 +64,15 @@ public class ProjectServiceImpl implements ProjectService {
     public BaseResponse getAllProjects(User user) {
         BaseResponse baseResponse = new BaseResponse();
         List<Project> projects = projectRepository.findAllByProjectOwnerAndDeletedFalse(user.getId());
-        List<ProjectResponseModel> projectResponseModels;
+        List<ProjectResponseModel> projectResponseModels = new ArrayList<>();
         if (projects != null) {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            projectResponseModels = mapper.convertValue(projects, new TypeReference<List<ProjectResponseModel>>() {
-            });
+            for (Project project :
+                    projects) {
+                ProjectResponseModel projectResponseModel = new ProjectResponseModel();
+                projectResponseModel.setId(project.getId());
+                projectResponseModel.setName(project.getName());
+                projectResponseModels.add(projectResponseModel);
+            }
             baseResponse.setData(projectResponseModels);
             baseResponse.setStatus(HttpStatus.OK);
         } else {
@@ -109,13 +113,23 @@ public class ProjectServiceImpl implements ProjectService {
     public BaseResponse getProjectsByUser(String userName) {
         BaseResponse baseResponse = new BaseResponse();
         User user = userRepository.findFirstByUsername(userName);
+        if (user == null) {
+            baseResponse.setData(false);
+            baseResponse.setStatus(HttpStatus.BAD_REQUEST);
+            baseResponse.setErrorMessage("Bad request");
+            return baseResponse;
+        }
         List<Project> projects = projectRepository.findAllByProjectOwnerAndDeletedFalse(user.getId());
-        List<ProjectResponseModel> projectResponseModels;
+        List<ProjectResponseModel> projectResponseModels = new ArrayList<>();
         if (projects != null) {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            projectResponseModels = mapper.convertValue(projects, new TypeReference<List<ProjectResponseModel>>() {
-            });
+            for (Project project :
+                    projects) {
+                ProjectResponseModel projectResponseModel = new ProjectResponseModel();
+                projectResponseModel.setId(project.getId());
+                projectResponseModel.setName(project.getName());
+                projectResponseModels.add(projectResponseModel);
+            }
+
             baseResponse.setData(projectResponseModels);
             baseResponse.setStatus(HttpStatus.OK);
         } else {

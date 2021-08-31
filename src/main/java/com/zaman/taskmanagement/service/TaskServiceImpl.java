@@ -204,6 +204,12 @@ public class TaskServiceImpl implements TaskService {
     public BaseResponse getTasksByUser(String userName) {
         BaseResponse baseResponse = new BaseResponse();
         User user = userRepository.findFirstByUsername(userName);
+        if (user==null){
+            baseResponse.setData(false);
+            baseResponse.setStatus(HttpStatus.BAD_REQUEST);
+            baseResponse.setErrorMessage("Bad request");
+            return baseResponse;
+        }
         List<Project> projects = projectRepository.findAllByProjectOwnerAndDeletedFalse(user.getId());
         List<Integer> projectIds = new ArrayList<>();
         for (Project project : projects) {
