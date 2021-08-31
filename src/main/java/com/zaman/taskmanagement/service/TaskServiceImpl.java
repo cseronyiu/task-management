@@ -34,7 +34,7 @@ public class TaskServiceImpl implements TaskService {
         BaseResponse baseResponse = new BaseResponse();
         BaseResponse validateRequest = validateTask(request);
         if (validateRequest == null) {
-            Project project = projectRepository.findFirstByIdAndProjectOwnerAndDeletedFalse(request.getProjectId(),user.getId());
+            Project project = projectRepository.findFirstByIdAndProjectOwnerAndDeletedFalse(request.getProjectId(), user.getId());
             if (project == null) {
                 baseResponse.setData(false);
                 baseResponse.setStatus(HttpStatus.BAD_REQUEST);
@@ -64,32 +64,26 @@ public class TaskServiceImpl implements TaskService {
         BaseResponse baseResponse = new BaseResponse();
         BaseResponse validateRequest = validateTask(request);
         if (validateRequest == null) {
-            Project project = projectRepository.findFirstByIdAndProjectOwnerAndDeletedFalse(request.getProjectId(),user.getId());
-            if (project == null) {
+            Task task = taskRepository.findFirstByIdAndDeletedFalse(request.getId());
+            if (task == null || task.getProject().getProjectOwner()!=user.getId()) {
                 baseResponse.setData(false);
                 baseResponse.setStatus(HttpStatus.BAD_REQUEST);
                 baseResponse.setErrorMessage("Bad request");
                 return baseResponse;
             }
-            Task task = taskRepository.findFirstByIdAndDeletedFalse(request.getId());
-            if (task != null) {
-                if (task.getDescription() != request.getDescription()) {
-                    Task dbTask = taskRepository.findFirstByProject_IdAndDescriptionAndDeletedFalse(request.getProjectId(), request.getDescription());
-                    if (dbTask == null) {
-                        baseResponse = saveOrUpdateTask(task, request, user, project, false);
-                    } else {
-                        baseResponse.setData(false);
-                        baseResponse.setStatus(HttpStatus.CONFLICT);
-                        baseResponse.setErrorMessage("Task Already exist");
-                    }
+            if (task.getDescription() != request.getDescription()) {
+                Task dbTask = taskRepository.findFirstByProject_IdAndDescriptionAndDeletedFalse(request.getProjectId(), request.getDescription());
+                if (dbTask == null) {
+                    baseResponse = saveOrUpdateTask(task, request, user, task.getProject(), false);
                 } else {
-                    baseResponse = saveOrUpdateTask(task, request, user, project, false);
+                    baseResponse.setData(false);
+                    baseResponse.setStatus(HttpStatus.CONFLICT);
+                    baseResponse.setErrorMessage("Task Already exist");
                 }
             } else {
-                baseResponse.setData(false);
-                baseResponse.setStatus(HttpStatus.BAD_REQUEST);
-                baseResponse.setErrorMessage("Bad request");
+                baseResponse = saveOrUpdateTask(task, request, user, task.getProject(), false);
             }
+
 
         } else {
             baseResponse = validateRequest;
@@ -204,7 +198,7 @@ public class TaskServiceImpl implements TaskService {
     public BaseResponse getTasksByUser(String userName) {
         BaseResponse baseResponse = new BaseResponse();
         User user = userRepository.findFirstByUsername(userName);
-        if (user==null){
+        if (user == null) {
             baseResponse.setData(false);
             baseResponse.setStatus(HttpStatus.BAD_REQUEST);
             baseResponse.setErrorMessage("Bad request");
@@ -267,13 +261,13 @@ public class TaskServiceImpl implements TaskService {
         BaseResponse baseResponse = new BaseResponse();
         if (isSave == true) {
             task.setCreatedBy(user.getId());
+            task.setProject(project);
         } else {
             task.setUpdatedBy(user.getId());
         }
         task.setDescription(request.getDescription());
         task.setStatus(request.getStatus());
         task.setDueDate(request.getDueDate());
-        task.setProject(project);
         taskRepository.save(task);
         baseResponse.setData(true);
         baseResponse.setStatus(HttpStatus.OK);
@@ -284,10 +278,7 @@ public class TaskServiceImpl implements TaskService {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(false);
         baseResponse.setStatus(HttpStatus.BAD_REQUEST);
-        if (request.getProjectId() <= 0) {
-            baseResponse.setErrorMessage("Invalid Project.");
-            return baseResponse;
-        } else if (request.getDescription() == null) {
+         if (request.getDescription() == null) {
             baseResponse.setErrorMessage("Description is empty.");
             return baseResponse;
         } else if (request.getStatus() == null) {
