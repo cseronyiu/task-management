@@ -5,6 +5,20 @@
 1. change database configurations 
 2. run project
 
+###### User credentials:
+* User:
+{
+	"username":"user",
+	"password":"password"
+}
+
+* Admin:
+{
+	"username":"admin",
+	"password":"password"
+}
+
+
 ### APIs:
 ###### * Please import Task Management.postman_collection.json to your postman for easy testing.
 #### signin:
