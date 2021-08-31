@@ -135,7 +135,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"description\": \"Desc1\",\r\n    \"status\": \"open\",\r\n    \"dueDate\":\"2021-10-10\"\r\n}",
+					"raw": "{\r\n    \"description\": \"Desc1\",\r\n    \"status\": \"open\",\r\n    \"projectId\": \"26\",\r\n    \"dueDate\":\"2021-10-10\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -332,7 +332,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\":27,\r\n    \"description\": \"Desc15\",\r\n    \"status\": \"open\",\r\n    \"projectId\": \"26\",\r\n    \"dueDate\":\"2021-02-02\"\r\n}",
+					"raw": "{\r\n    \"id\":27,\r\n    \"description\": \"Desc15\",\r\n    \"status\": \"open\",\r\n    \"dueDate\":\"2021-02-02\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
